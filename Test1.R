@@ -1,36 +1,7 @@
 
 ### PREGUNTAS DEL TEST 1
 # 1. Tenemos dos urnas: la urna I y la urna II. La urna I contiene tres bolas blancas 
-#y cuatro negras mientras que la urna II está inicialmente vacía. Extraemos dos bolas al
-#azar de la urna I y, sin mirar su color, las ponemos dentro de la urna II. A continuación 
-#cogemos al azar una bola de la urna I y otra bola al azar de la urna II. 
-#¿Cuál es la probabilidad de que ambas sean blancas?
-
-#Supondremos que las bolas del 1-3 son blancas y las bolas del 4-7 son negras
-
-N = 5000
-sims = replicate(N,{
-  urna1 = 1:7
-  urna2 = sample(urna1, 2)
-  urna1 = setdiff(urna1, urna2)
-  
-  s_1 = sample(urna1,1)
-  s_2 = sample(urna2,1)
-  sum(all((s_1 < 4),(s_2 < 4)))
-}
-)
-mean(sims)
-#sum(simulacion)/N
-
-
-# 2.Hay 39 ex-presidentes de EEUU que han fallecido. ¿Cuál es la probabilidad de que al
-#menos 2 de ellos hayan muerto el mismo dı́a? (Asume que un año tiene 365 dı́as).
-
-calendario = 365
-bajas = sample(calendario, 39)
-
-casos_fav = variaciones(365, 39) #De cuantas maneras distintas puedo tener 39 bajas en un año
-casos_totales = 365^39
+#y cuatro negra39
 1-(casos_fav/casos_totales)
 
 no_coincidencias = casos_fav / casos_totales
@@ -57,10 +28,10 @@ i = 1
 capas = c(1:14)
 
 for(i in capas){
-  tmp = 0.6 ^ i
+	  tmp = 0.6 ^ i
   if(tmp <= 0.001){
-    cap = i
-  }
+	      cap = i
+    }
 }
 cap
 
@@ -72,15 +43,15 @@ cap
 N = 50000
 
 simulacion = replicate(N, {
-  n_lanzam = 0 
-  n_caras = 0
-  while(n_caras != 2){
-    lanzam = sample(c(1, 0), 1, prob = c(0.4, 0.6))
-    n_caras = n_caras + lanzam
-    n_lanzam = n_lanzam + 1
-  }
-  exito = (n_lanzam == 10)
-  sum(exito)
+			         n_lanzam = 0 
+				   n_caras = 0
+				   while(n_caras != 2){
+					       lanzam = sample(c(1, 0), 1, prob = c(0.4, 0.6))
+				       n_caras = n_caras + lanzam
+				           n_lanzam = n_lanzam + 1
+				         }
+				     exito = (n_lanzam == 10)
+				     sum(exito)
 })
 sum(simulacion) / N
 
@@ -97,17 +68,47 @@ sum(simulacion) / N
 N = 50000
 
 simulacion = replicate(N, {
-  equipos = c(1:8)
-  trampa = 0
-  x = c(1, 2, 3, 4)
-  for(e in x){
-    rondaI = sample(equipos, 2)
-    casosI = !(all(rondaI >= 5) | all(rondaI <= 4))
-    equipos = setdiff(sample(equipos), rondaI)
-    trampa = trampa + sum(casosI)
-   
-  }
-  sum(trampa_total = (trampa == 4))
+			         equipos = c(1:8)
+				   trampa = 0
+				   x = c(1, 2, 3, 4)
+				     for(e in x){
+					         rondaI = sample(equipos, 2)
+				       casosI = !(all(rondaI >= 5) | all(rondaI <= 4))
+				           equipos = setdiff(sample(equipos), rondaI)
+				           trampa = trampa + sum(casosI)
+					      
+					     }
+				     sum(trampa_total = (trampa == 4))
 })
 
 (sum(simulacion)/N)
+s mientras que la urna II está inicialmente vacía. Extraemos dos bolas al
+#azar de la urna I y, sin mirar su color, las ponemos dentro de la urna II. A continuación 
+#cogemos al azar una bola de la urna I y otra bola al azar de la urna II. 
+#¿Cuál es la probabilidad de que ambas sean blancas?
+
+#Supondremos que las bolas del 1-3 son blancas y las bolas del 4-7 son negras
+
+N = 5000
+sims = replicate(N,{
+			   urna1 = 1:7
+			     urna2 = sample(urna1, 2)
+			     urna1 = setdiff(urna1, urna2)
+			       
+			       s_1 = sample(urna1,1)
+			       s_2 = sample(urna2,1)
+			         sum(all((s_1 < 4),(s_2 < 4)))
+}
+)
+mean(sims)
+#sum(simulacion)/N
+
+
+# 2.Hay 39 ex-presidentes de EEUU que han fallecido. ¿Cuál es la probabilidad de que al
+#menos 2 de ellos hayan muerto el mismo dı́a? (Asume que un año tiene 365 dı́as).
+
+calendario = 365
+bajas = sample(calendario, 39)
+
+casos_fav = variaciones(365, 39) #De cuantas maneras distintas puedo tener 39 bajas en un año
+casos_totales = 365^
