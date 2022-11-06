@@ -171,18 +171,33 @@ caso_fav/casos_tot
 #(a) Halla la probabilidad p de que ambas sean rojas.
 #(b) Halla la probabilidad p de que una sea roja y otra azul.
 
+#Asumiremos que las bolas Rojas son los 1, y los 0 las bolas azules
+A = c(rep(1, 5), rep(0, 3))
+B = c(rep(1, 2), rep(0, 3))
+
+#a)
+N = 5000
+sims = replicate(N,{
+  casoA = sample(A, 1)
+  casoB = sample(B, 1)
+  exito = ((sum(casoA, casoB))>1)
+  sum(exito)
+})
+mean(sims)
+
+#b) 
+N = 5000
+sims = replicate(N,{
+  casoA = sample(A, 1)
+  casoB = sample(B, 1)
+  exito = ((sum(casoA, casoB)) == 1)
+  sum(exito)
+})
+mean(sims)
+
+## Otra solucion (solo me interesa recordar el table)
 A = c(rep("R", 5), rep("A", 3))
 B = c(rep("R", 2), rep("A", 3))
-
-N = 5000
-
-simulacionA = replicate(N, {
-  cajaA = sample(A, 1) 
-  cajaB = sample(B, 1)
-  all(c(cajaA, cajaB) == "R")
-})
-probA = sum(simulacionA)/ N
-probA
 
 simulacionB = replicate(N, {
   cajaA = sample(A, 1) 
@@ -194,28 +209,50 @@ probB = sum(simulacionB)/ N
 # 11. Un armario tiene 10 pares de zapatos. Si seleccionamos 8 zapatos al azar, Cu´al es la
 #probabilidad de (a) no seleccionar un par completo, (b) seleccionar exactamente un par completo
 
-zapatos = c(rep(c(1:10), 2))
-N = 5000
-
-simulacion = replicate(N, {
-  seleccion = sample(zapatos, 8)
-  caso_fav = any(table(seleccion) == 2)
+### RESOLVER POR COMBINATORIA QUE NO DA IGUAL
+N = 50000
+sims = replicate(N,{
+  closet = c(rep((0:1), 10))
+  escoger = sample(closet, 8)
+  exito = ((sum(escoger)) == 4)
 })
 
-un_par_completo = sum(simulacion)/ N
-un_par_completo
-ningun_par = (1 - un_par_completo)
-ningun_par
+par_completo = mean(sims)
+par_completo
+par_incompleto = 1 - (par_completo)
+par_incompleto
+
 
 # 12. En una l´ınea est´an acomodadas cinco canicas rojas, 2 blancas y 3 azules. Si las canicas del
 # mismo color son indistinguibles. ¿Cu´antas ordenaciones distintas existen?
 
-canicas = c(rep("R", 5), rep("B", 2), rep("A", 3))
-sample(canicas) # factorial(10)/ factorial(5)*factorial(2)*factorial(3) 
+#permutaciones con elementos indistinguibles
+factorial(10) / (factorial(5)*factorial(2)*factorial(3))
 
-factorial(10)/ factorial(5)*factorial(2)*factorial(3) 
+canicas = c(rep("R", 5),rep("B", 2),rep("Az", 3))
+sample(canicas)  ##Falta como una mejor explicacion, pero xs 
+
 
 # 13. ¿Cu´antas “hamburguesas” distintas pueden hacerse con carne, lechuga, tomate, queso y bacon? Enti´endase
 #por hamburguesa la combinaci´on de los anteriores ingredientes, habiendo al menos uno de ellos presente.
 
 ingredientes = c("Carne", "Lechuga", "tomate", "Queso", "Bacon")
+hamburguesa1 = sample(ingredientes, 1) # 5
+hamburguesa2 = sample(ingredientes, 2) # variaciones(5, 2)
+hamburguesa3 = sample(ingredientes, 3) # variaciones(5, 3)
+hamburguesa4 = sample(ingredientes, 4) # variaciones(5, 4)
+hamburguesa5 = sample(ingredientes) # permutaciones = factorial(5)
+
+variaciones(5,2) + variaciones(5,3) + variaciones(5,4) + 5 
+
+
+#14.  ¿De cu´antas maneras posibles se pueden sentar 7 personas alrededor de una mesa redonda
+#si (a) se pueden sentar en cualquier lugar, (b) 2 personas se llevan mal y no pueden sentase juntas.
+
+# a) Permutaciones circulares 
+factorial(7-1)
+# b) HACER
+
+
+
+
