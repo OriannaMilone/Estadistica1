@@ -258,7 +258,74 @@ factorial(7-1)
 #ambos serán como "jefes de mesa", entonces permutaciones circulares de 7-2, sin embargo, también hay que considerar
 #que estos jefes de mesa pueden sentarse en el lugar del otro.
 
-factorial(7-2) * 4 #Veo porque sería *2, pero *4 ???
+factorial(7-2) * 4 #Veo porque sería *2, pero *4 ??? / Los dos extremos?
+
+#15. Una caja contiene 8 bolas rojas, 3 blancas y 9 azules. Si se sacan 3 bolas al azar sin
+#reemplazamiento, determina la probabilidad de que (a) las 3 sean rojas, (b) las 3 sean blancas, (c) 2 sean
+#rojas y 1 blanca, (d) al menos 1 sea blanca, (e) se saque una de cada color, (f) se saquen en el siguiente
+#orden: roja, blanca, azul.
+
+N = 5000
+#a)
+simsR = replicate(N, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  exito = all((table(bolas) == 3) & (bolas[1] == "R"))
+  sum(exito)
+})
+mean(simsR)
+#b)
+simsB = replicate(N, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  exito = all((table(bolas) == 3) & (bolas[1] == "B"))
+  sum(exito)
+})
+mean(simsB) 
+#c) 
+#### REVISAR
+
+simsC = replicate(100, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  
+  aja = table(bolas, exclude = c("B", "A"))
+
+  exito = all((any(bolas == "B")) && (table(bolas, exclude = c("B", "A")) == 2))
+  exito
+})
+sum(simsC) / 100
+
+#d)
+simsD = replicate(N, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  exito = any(bolas == "B")
+  sum(exito)
+})
+mean(simsD) 
+#e)
+simsE = replicate(N, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  exito = all((table(bolas) == 1))
+  sum(exito)
+})
+mean(simsE) 
+#f) 
+simsF = replicate(N, {
+  caja = c(rep("R", 8), rep("B", 3), rep("A", 9))
+  bolas = sample(caja, 3)
+  exito = all((bolas[1] == "R") & (bolas[2] == "B") & (bolas[3] == "A"))
+  sum(exito)
+})
+mean(simsF) 
+
+#18. Se lanzan dos monedas y se tira un dado tantas veces como caras se hayan obtenido. (a) Halla la
+#probabilidad de que la suma de las puntuaciones sea 6. (b) Si sabemos que el resultado del juego es que
+#los dados han sumado 6, ¿Cu´al es la probabilidad de haber obtenido 0 caras, 1 cara o 2 caras?
+
+  
 
 
 
