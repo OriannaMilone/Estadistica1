@@ -237,22 +237,28 @@ sample(canicas)  ##Falta como una mejor explicacion, pero xs
 #por hamburguesa la combinaci´on de los anteriores ingredientes, habiendo al menos uno de ellos presente.
 
 ingredientes = c("Carne", "Lechuga", "tomate", "Queso", "Bacon")
-hamburguesa1 = sample(ingredientes, 1) # 5
-hamburguesa2 = sample(ingredientes, 2) # variaciones(5, 2)
-hamburguesa3 = sample(ingredientes, 3) # variaciones(5, 3)
-hamburguesa4 = sample(ingredientes, 4) # variaciones(5, 4)
-hamburguesa5 = sample(ingredientes) # permutaciones = factorial(5)
+hamburguesa1 = sample(ingredientes, 1) # 5       Este representa los 5 posibles casos de tener solo 1 ingredientes, si consideramos que hay 5, entonces 5
+hamburguesa2 = sample(ingredientes, 2) # combinaciones(5, 2) Ahora, evaluamos de cuantas maneras podemos tomar 2 ingredientes de 5, sin que nos importe el orden
+hamburguesa3 = sample(ingredientes, 3) # combinaciones(5, 3) Mismo razonamiento para 3 ing de 5
+hamburguesa4 = sample(ingredientes, 4) # combinaciones(5, 4) Mismo razonamiento para 4 ing de 5
+hamburguesa5 = sample(ingredientes)    # 1       Este representa el único caso, donde seleccionamos todos los ingredientes
 
-variaciones(5,2) + variaciones(5,3) + variaciones(5,4) + 5 
+choose(5,2) + choose(5,3) + choose(5,4) + 5 + 1
 
 
 #14.  ¿De cu´antas maneras posibles se pueden sentar 7 personas alrededor de una mesa redonda
 #si (a) se pueden sentar en cualquier lugar, (b) 2 personas se llevan mal y no pueden sentase juntas.
 
 # a) Permutaciones circulares 
+invitados = c(1:7) 
+jefe_mesa = sample(invitados, 1) #Fijamos a un "jefe en la mesa", y permutamos al resto de personas alrededor. 
+invitados_restantes = setdiff(sample(invitados), jefe_mesa) #De cuantas maneras podemos ordenar a 7-1 personas
 factorial(7-1)
-# b) HACER
+# b) Para este caso, fijamos a las dos personas siempre con una persona de por medio (a ambos lados), de modo que
+#ambos serán como "jefes de mesa", entonces permutaciones circulares de 7-2, sin embargo, también hay que considerar
+#que estos jefes de mesa pueden sentarse en el lugar del otro.
 
+factorial(7-2) * 4 #Veo porque sería *2, pero *4 ???
 
 
 
