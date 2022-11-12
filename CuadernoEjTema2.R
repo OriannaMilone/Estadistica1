@@ -325,7 +325,64 @@ mean(simsF)
 #probabilidad de que la suma de las puntuaciones sea 6. (b) Si sabemos que el resultado del juego es que
 #los dados han sumado 6, ¿Cu´al es la probabilidad de haber obtenido 0 caras, 1 cara o 2 caras?
 
-  
+#Para facilitar los calculos, vamos a asumir que las Caras son 1, y los 0 Cruz
+#a)
+N = 50000
+sims = replicate(N,{
+  monedas = sample(c(1,0), 2, replace = TRUE)
+  lanzamiento = sum(monedas)
+  if(lanzamiento != 0){
+    dado = sample(c(1:6), lanzamiento, replace = TRUE)
+  }else{
+    dado = 0
+  }
+  exito = (sum(dado) == 6)
+  sum(exito)
+})
+resultado6 = mean(sims)
 
+#b) 
+#b.1) Evaluamos lo siguiente: Se nos esta preguntando por P(H=0 | r=6), tenemos una probabilidad condicionada 
+#Queremos hallar la prob de que hayan salido 0 caras, sabiendo que el resultado final, es 6. Por Bayes podemos decir 
+# que P(H=0 | r=6) = P(H=0 Y r=6)/ P(r=6). Sabemos cual es la probabilidad de que el resultado final sea 6, sin 
+#embargo, para calcular la intersección, descubrimos que el evento de sacar 0 caras y obtener como resultado final 
+#6, son eventos que no pueden ocurrir al mismo tiempo. Esto nos lleva a concluir que, la P(H=0 | r=6) = 0.
+
+#b.2) P(H=1 | r=6) = P(H=1 Y r=6)/ P(r=6)
+#Calculamos la intersección entre : Ha salido solo una cara y el resultado ha sido 6
+N = 50000
+sims = replicate(N,{
+  monedas = sample(c(1,0),1)
+  monedas
+  if(monedas != 0){
+    dado = sample(c(1:6), 1)
+  }else{
+    dado = 0
+  }
+  exito = (sum(dado) == 6)
+  sum(exito)
+})
+interseccion = mean(sims)
+
+#Aplicamos la formula, y dividimos la intersección entre la prob de obtener como resultado 6.
+interseccion / resultado6
+
+#b.3) Repetimos el procedimiento anterior, particularizando para caras = 2
+# P(H=2 | r=6) = P(H=2 Y r=6)/ P(r=6)
+
+N = 50000
+sim = replicate(N,{
+  dado = sample(c(1:6), 2, replace = TRUE)
+  exito = (sum(dado) == 6)
+  sum(exito)
+})
+b3 = mean(sim)
+b3/resultado6
+
+#19) El 52% de los estudiantes de una universidad son mujeres. El 5% de los estudiantes estudian
+#inform´atica. El 2% de los estudiantes son mujeres que estudian inform´atica. Si un estudiante es elegido
+#al azar, calcula la probabilidad de que
+#(a) el estudiante sea mujer, dado que el estudiante hace inform´atica.
+#(b) el estudiante hace inform´atica, dado que el estudiante sea mujer.
 
 
