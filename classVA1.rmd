@@ -1,1 +1,111 @@
-creado.
+---
+title: "Tema 3-Variables aleatorias I"
+output: html_document
+---
+
+1. Sea la VA X: "nº de caras en n lanzamientos de una moneda
+cuya probabilidad de cara es p". Estudia su distribución para el caso
+$p=1/2$, $n=100$ mediante la función de probabilidad.
+
+$$P(X=x) = nCx \cdot p^x \cdot (1-p) ^{n-x}$$
+
+```{r}
+p_heads = function(x, n, p){
+  choose(n,x)*((p^x) * (1-p)^(n-x))
+}
+
+p_heads = Vectorize(p_heads)
+#Lanzamos 100 veces una moneda, el numero máximo de caras que podemos sacar es 100, y el mínimo 0, Si queremos todos esos calculos, recordemos que aquí todo esta vectorizado. 
+
+all_probs = p_heads(0:100, 100, 0.5)
+plot(0:100, all_probs, type = "h", xlab = "x: nº caras", ylab = "y: P(X=x)")
+
+```
+
+
+1.2 Escribe una función de R para la función de distribución de la VA aleatoria
+X: ''nº de caras en 100 lanzamientos de una moneda cuya probabilidad de cara es 0.5".
+Dibújala y úsala para responder a las siguientes preguntas:
+
+  * $P(40 \leq X \leq 60)$
+  * $P(40 < X < 60)$
+  * $P(40 \leq X < 60)$
+
+```{r}
+#F(X) = P(X<= x) = sum(all(p(X=x) X <= x))
+F_heads = function(x, n, p){
+  sum(p_heads(0:x,n,p))
+}
+F_heads = Vectorize(F_heads)
+#a) 
+F_heads(60, 100, 0.5) - F_heads(39, 100, 0.5)
+#b)
+F_heads(59, 100, 0.5) - F_heads(40, 100, 0.5)
+#c)
+F_heads(59, 100, 0.5) - F_heads(39, 100, 0.5)
+
+F_values = F_heads(0:100, 100, 0.5)
+plot(0:100, F_values)
+
+```
+1.3 Calcula la esperanza de la variable aleatoria X:''nº de caras en 100 lanzamientos
+de una moneda sin trucar'' usando 1) la definición y 2) simulaciones. ¿Cuadra
+con tu intuición?
+
+```{r}
+#1)E[X] = sum(x * P(X = x)) = mu
+sum((0:100) * p_heads(0:100, 100, 0.5))
+#2)
+N = 5000
+sims = replicate(N, {
+  sum(sample(0:1, 100, replace = TRUE))
+})
+mu = mean(sims)
+```
+2. Un jugador gana 1 euro si al tirar un dado obtiene un 1 o un 3; pierde 2 euros
+si sale un 2, 4, 6; y gana 4 euros si sale un 5. ¿Cuál es la ganancia esperada? 
+¿Jugarías a este juego?
+
+```{r}
+N = 5000
+sims = replicate(N,{
+  resultado = 0 
+  dado = sample(0:6, 1)
+  if(dado %% 2 == 0){
+    resultado = resultado - 2
+  }else if(dado == 5){
+    resultado = resultado + 4
+  }else{ 
+    resultado = resultado + 1
+  }
+  sum(resultado)
+})
+mean(sims)
+
+```
+
+#Calcula la varianza y desviaci´on t´ıpica de la variable aleatoria X:“nº de caras en
+100 lanzamientos de una moneda sin trucar” usando 1) la definici´on y 2)
+simulaciones. Visualiza la desviaci´on t´ıpica sobre la funci´on de probabilidad.
+
+```{r}
+#Var[X]= E[(X-u)^2]
+#Que es lo que hacemos en la varianza, nuestras Xs, son [(X - u)^2] y la esperanza, sera entonces
+#ese sumatorio de las Xs, (que van del 0-X) * su prob
+
+varianza = sum((0:100 - 50)^2 * (p_heads(0:100, 100, 0.5)))
+sd_aja = sqrt(varianza)
+
+plot(0:100, p_heads(0:100, 100, 0.5), type = "h")
+abline(v = 50 - sd_aja, col = 2, lwd = 3)
+abline(v = 50 + sd_aja, col = 2, lwd = 3)
+
+abline(v = 50 - 3*sd_aja, col = 3, lwd = 3)
+abline(v = 50 + 3*sd_aja, col = 3, lwd = 3)
+
+#por simulaciones
+xs = re
+```
+
+---
+

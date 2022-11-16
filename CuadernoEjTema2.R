@@ -386,3 +386,4 @@ b3/resultado6
 #(b) el estudiante hace inform´atica, dado que el estudiante sea mujer.
 
 
+
